@@ -1,0 +1,37 @@
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Funções auxiliares ---
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 86400000));
+    document.cookie = `${name}=${value}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
+  }
+
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+    return match ? match[2] : null;
+  }
+
+  // --- Configuração do teste A/B ---
+  const webhookA = "https://webhook-cf.zapsafe.work/webhook/b";
+  const webhookB = "https://webhook-cf.zapsafe.work/webhook/a";
+
+  let testVersion = getCookie("ab_test_version");
+  if (!testVersion) {
+    testVersion = Math.random() < 0.5 ? "A" : "B";
+    setCookie("ab_test_version", testVersion, 30);
+  }
+
+  const targetWebhook = testVersion === "A" ? webhookA : webhookB;
+
+  // --- Captura parâmetros (UTM, GTM, etc.) ---
+  const params = new URLSearchParams(window.location.search);
+  params.set("ab_test_version", testVersion);
+
+  // --- Monta URL final ---
+  const redirectUrl = `${targetWebhook}?${params.toString()}`;
+
+  // --- Redirecionamento instantâneo preservando rastreamento ---
+  window.location.replace(redirectUrl);
+});
+</script>
