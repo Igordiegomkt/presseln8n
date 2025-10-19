@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Configuração do teste A/B ---
-  const webhookA = "https://webhook-cf.zapsafe.work/webhook/b";
-  const webhookB = "https://webhook-cf.zapsafe.work/webhook/a";
+  const webhookA = "https://webhook-cf.zapsafe.work/webhook/a";
+  const webhookB = "https://webhook-cf.zapsafe.work/webhook/b";
 
   let testVersion = getCookie("ab_test_version");
   if (!testVersion) {
@@ -35,3 +35,4 @@ document.addEventListener("DOMContentLoaded", () => {
   window.location.replace(redirectUrl);
 });
 </script>
+
