@@ -1,38 +1,239 @@
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // --- Funções auxiliares ---
-  function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days * 86400000));
-    document.cookie = `${name}=${value}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
-  }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Carol está online...</title>
 
-  function getCookie(name) {
-    const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-    return match ? match[2] : null;
-  }
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MT6B5TBD');</script>
 
-  // --- Configuração do teste A/B ---
-  const webhookA = "https://webhook-cf.zapsafe.work/webhook/a";
-  const webhookB = "https://webhook-cf.zapsafe.work/webhook/b";
+  <!-- UTMify -->
+  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" async defer></script>
 
-  let testVersion = getCookie("ab_test_version");
-  if (!testVersion) {
-    testVersion = Math.random() < 0.5 ? "A" : "B";
-    setCookie("ab_test_version", testVersion, 30);
-  }
+  <!-- Pixel UTMify -->
+  <script>
+    window.pixelId = "68e19e32a255808f0ad6f844";
+    var a = document.createElement("script");
+    a.async = true; a.defer = true;
+    a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+    document.head.appendChild(a);
+  </script>
 
-  const targetWebhook = testVersion === "A" ? webhookA : webhookB;
+  <!-- Tailwind + Fonte Poppins -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 
-  // --- Captura parâmetros (UTM, GTM, etc.) ---
-  const params = new URLSearchParams(window.location.search);
-  params.set("ab_test_version", testVersion);
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
 
-  // --- Monta URL final ---
-  const redirectUrl = `${targetWebhook}?${params.toString()}`;
+    /* 🎥 Fundo em vídeo */
+    .video-background-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
 
-  // --- Redirecionamento instantâneo preservando rastreamento ---
-  window.location.replace(redirectUrl);
-});
-</script>
+    .video-background {
+      min-width: 100%;
+      min-height: 100%;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      filter: brightness(0.4);
+    }
+  </style>
+</head>
 
+<body class="bg-black text-white flex items-center justify-center min-h-screen relative">
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT6B5TBD"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- 🎥 Vídeo de Fundo -->
+  <div class="video-background-container">
+    <video autoplay loop muted playsinline class="video-background">
+      <source src="https://conteudosites.s3.us-east-005.backblazeb2.com/pressel/pressel04.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos.
+    </video>
+  </div>
+
+  <!-- 🧊 Container Central -->
+  <main class="relative z-10 flex flex-col items-center justify-center w-full px-4">
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <!-- 🔳 Card com proporção quadrada -->
+    <div id="profile-container"
+         class="relative bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-10 aspect-square max-w-md w-full text-center text-white transition-all duration-500 flex flex-col justify-center">
+
+      <!-- 📸 Foto de Perfil -->
+      <img src="https://conteudosites.s3.us-east-005.backblazeb2.com/pressel/foto+perfil.jpeg"
+           alt="Carol"
+           class="w-36 h-36 rounded-full mx-auto border-4 border-white/20 shadow-lg object-cover" />
+
+      <!-- 💬 Status sempre visível -->
+      <div id="status" class="mt-6 text-green-300 font-medium text-sm">
+        💬 Carol Andrade está online neste momento
+      </div>
+
+      <!-- 💬 Headline -->
+      <p class="text-lg font-medium mt-4 mb-2">
+        Carol está online agora te esperando
+      </p>
+
+      <!-- 📍 Localização -->
+      <p id="location-info" class="text-xs text-white/60 mt-3"></p>
+    </div>
+  </main>
+
+  <script>
+    // 💬 Alternância de status suave e contínua
+    const statusEl = document.getElementById("status");
+    const mensagensStatus = [
+      "💬 Carol Andrade está online neste momento",
+      "🔁 Abrindo WhatsApp...",
+      "✅ Conectando...",
+      "🟢 ONLINE"
+    ];
+    let idx = 0;
+
+    function trocarStatus() {
+      statusEl.textContent = mensagensStatus[idx];
+      idx = (idx + 1) % mensagensStatus.length;
+      setTimeout(trocarStatus, 4000);
+    }
+
+    // inicia logo com o status visível
+    setTimeout(trocarStatus, 4000);
+
+    // 📍 Localização dinâmica
+    window.addEventListener('load', () => {
+      const minKm = 5, maxKm = 31;
+      const randomKm = Math.floor(Math.random() * (maxKm - minKm + 1)) + minKm;
+      document.getElementById('location-info').textContent =
+        `📍 Perto de você! Na sua região, a somente ${randomKm} km disponível para conversar`;
+    });
+
+    // 💬 Mensagens pré-definidas
+    const predefinedMessages = [
+      "Quero te ver",
+      "Quero seus conteúdos",
+      "Quero ver sua fotinha",
+      "Quero seus vídeos"
+    ];
+
+    // 🔗 Fallback
+    const FALLBACK_URL = "https://webhook-cf.zapsafe.work/webhook/a";
+    let fallbackTimer = setTimeout(() => window.location.href = FALLBACK_URL, 8000);
+
+    // ⚙️ API Configurações
+    const urlPressel = "https://atexvoxukvaqittpqkov.supabase.co/rest/v1/PRESSEL";
+    const apiKeyPresselBase = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0ZXh2b3h1a3ZhcWl0dHBxa292Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA1NTYyNjAsImV4cCI6MjA3NjEzMjI2MH0.HptK9KRkqkSQL3jrwAwH0rOSDGhlXOTwGwGqjwNgtU4";
+    const OPERADORES = {
+      JULIO: {
+        nome: "JULIO",
+        apiKeyZap: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzU4MTY0NDAwLCJleHAiOjE5MTU5MzA4MDB9.J-bAKjIsuvBi897EsRNHYNVDyUdFmtrzYWOa0i1phTo",
+        userId: "50cfb001-b95c-40e9-b030-d1913553613c"
+      },
+      IGOR: {
+        nome: "IGOR",
+        apiKeyZap: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzU4MTY0NDAwLCJleHAiOjE5MTU5MzA4MDB9.J-bAKjIsuvBi897EsRNHYNVDyUdFmtrzYWOa0i1phTo",
+        userId: "3ec3fe68-2f91-4f10-bb0c-e34a3a5f6a99"
+      }
+    };
+    const urlZap = "https://supazapsafe.click-agora.com/rest/v1/rpc/get_user_devices_individual";
+
+    async function buscarUltimaOP() {
+      try {
+        const resp = await fetch(`${urlPressel}?select=OP&order=id.desc&limit=1`, {
+          headers: { "Authorization": `Bearer ${apiKeyPresselBase}`, "apikey": apiKeyPresselBase }
+        });
+        if (!resp.ok) throw new Error(await resp.text());
+        const dados = await resp.json();
+        return dados.length === 0 ? "IGOR" : dados[0].OP === "JULIO" ? "IGOR" : "JULIO";
+      } catch { return "JULIO"; }
+    }
+
+    async function buscarUltimoDispositivo(opNome) {
+      try {
+        const resp = await fetch(`${urlPressel}?select=DISPOSITIVO&OP=eq.${opNome}&order=id.desc&limit=1`, {
+          headers: { "Authorization": `Bearer ${apiKeyPresselBase}`, "apikey": apiKeyPresselBase }
+        });
+        if (!resp.ok) throw new Error(await resp.text());
+        const dados = await resp.json();
+        return dados.length > 0 ? dados[0].DISPOSITIVO : null;
+      } catch { return null; }
+    }
+
+    async function registrarPressel(opNome, dispositivoNome) {
+      const agora = new Date();
+      const dados = { OP: opNome, DISPOSITIVO: dispositivoNome, DATA: agora.toLocaleDateString("pt-BR"), HORA: agora.toLocaleTimeString("pt-BR") };
+      try {
+        const resposta = await fetch(urlPressel, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKeyPresselBase}`, "apikey": apiKeyPresselBase },
+          body: JSON.stringify(dados)
+        });
+        return resposta.ok;
+      } catch { return false; }
+    }
+
+    async function verificarDispositivos() {
+      const proximaOP = await buscarUltimaOP();
+      const config = OPERADORES[proximaOP];
+
+      try {
+        const resposta = await fetch(urlZap, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${config.apiKeyZap}`, "apikey": config.apiKeyZap },
+          body: JSON.stringify({ user_id_param: config.userId, limit_count: 50 })
+        });
+
+        if (!resposta.ok) return setTimeout(() => (window.location.href = FALLBACK_URL), 2000);
+        const json = await resposta.json();
+        const dispositivos = Array.isArray(json)
+          ? json
+          : Array.isArray(json.devices)
+          ? json.devices
+          : Array.isArray(json.result)
+          ? json.result
+          : [];
+
+        const abertos = dispositivos.filter(d => d.status === "Open");
+        if (abertos.length === 0) return setTimeout(() => (window.location.href = FALLBACK_URL), 2000);
+
+        const ultimoDispositivo = await buscarUltimoDispositivo(proximaOP);
+        const index = abertos.findIndex(d => d.device_name === ultimoDispositivo);
+        const proximoDispositivo = index === -1 || index === abertos.length - 1 ? abertos[0] : abertos[index + 1];
+        const numero = String(proximoDispositivo.phone_number).replace(/\D/g, "");
+
+        const registrado = await registrarPressel(proximaOP, proximoDispositivo.device_name);
+        if (registrado) {
+          clearTimeout(fallbackTimer);
+          const msg = predefinedMessages[Math.floor(Math.random() * predefinedMessages.length)];
+          setTimeout(() => window.location.href = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`, 1500);
+        } else {
+          setTimeout(() => (window.location.href = FALLBACK_URL), 2000);
+        }
+      } catch {
+        setTimeout(() => (window.location.href = FALLBACK_URL), 2000);
+      }
+    }
+
+    verificarDispositivos();
+  </script>
+</body>
+</html>
