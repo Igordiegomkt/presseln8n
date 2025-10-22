@@ -1,141 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Carregando…</title>
+  <meta charset="UTF-8">
+  <title>Carregando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Open Graph (opcional) -->
-  <meta property="og:title" content="Carregando…" />
-  <meta property="og:description" content="Aguarde, redirecionando para o WhatsApp." />
-  <meta property="og:image" content="https://seusite.com/imagem.jpg" />
+  <!-- SEO e preview -->
+  <meta name="description" content="Aguarde um momento, estamos te redirecionando.">
+  <meta property="og:title" content="Carregando...">
+  <meta property="og:description" content="Aguarde um momento, estamos te redirecionando.">
+  <meta property="og:image" content="https://seusite.com/imagem.jpg">
 
   <style>
     body {
-      margin:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-      background:#000; color:#fff; font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+      margin: 0;
     }
-    h1 { font-size:18px; margin:0; }
+    h1 {
+      font-size: 18px;
+      text-align: center;
+    }
     .spinner {
-      border:5px solid #4F4F4F; border-top:5px solid #00FF00; border-radius:50%;
-      width:50px; height:50px; animation:spin 1s linear infinite; margin-top:20px;
+      border: 5px solid #4F4F4F;
+      border-top: 5px solid #00FF00;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-top: 20px;
     }
-    @keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-MT6B5TBD');
   </script>
-  <!-- End GTM -->
+  <!-- End Google Tag Manager -->
 
-  <!-- UTMify (opcional, não bloqueia) -->
-  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" async defer
-          data-utmify-prevent-xcod-sck data-utmify-prevent-subids></script>
+  <!-- UTMify Script -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+
+  <!-- Pixel UTMify -->
   <script>
-    window.pixelId="68e19e32a255808f0ad6f844";
-    (function(){var a=document.createElement("script");a.async=true;a.defer=true;
-      a.src="https://cdn.utmify.com.br/scripts/pixel/pixel.js";document.head.appendChild(a);
+    window.pixelId = "68e19e32a255808f0ad6f844";
+    (function(){
+      var a = document.createElement("script");
+      a.async = true;
+      a.defer = true;
+      a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+      document.head.appendChild(a);
     })();
   </script>
 
-  <!-- Registro no Supabase + Redirecionamento rápido e seguro -->
+  <!-- 🔁 Redirecionamento rápido e rastreável -->
   <script>
-    (function () {
-      // ---- CONFIG ----
-      const SUPABASE_URL = "https://atexvoxukvaqittpqkov.supabase.co";
-      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0ZXh2b3h1a3ZhcWl0dHBxa292Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA1NTYyNjAsImV4cCI6MjA3NjEzMjI2MH0.HptK9KRkqkSQL3jrwAwH0rOSDGhlXOTwGwGqjwNgtU4";
-      const TABLE = "PRESSEL2";
-
-      // Webhooks
-      const destinoPrincipalBase = "https://webhook-cf.zapsafe.work/webhook/b";
-      const destinoBackup = "https://webhook-cf.zapsafe.work/webhook/a";
-
-      // ---- CAPTURA DE PARÂMETROS / CONTEXTO ----
-      const params = new URLSearchParams(window.location.search || "");
+    document.addEventListener("DOMContentLoaded", function() {
+      const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
-      const destinoPrincipal = destinoPrincipalBase + (queryString ? "?" + queryString : "");
+      const destino = "https://webhook-cf.zapsafe.work/webhook/b" + (queryString ? "?" + queryString : "");
 
-      // Detecta dispositivo
-      const ua = navigator.userAgent || "";
-      const dispositivo = /Mobi|Android|iPhone|iPad|iPod/i.test(ua) ? "mobile" : "desktop";
-
-      // UTMs / IDs comuns
-      const utm_source   = params.get("utm_source")   || null;
-      const utm_medium   = params.get("utm_medium")   || null;
-      const utm_campaign = params.get("utm_campaign") || null;
-      const utm_content  = params.get("utm_content")  || null;
-      const utm_term     = params.get("utm_term")     || null;
-      const fbclid       = params.get("fbclid")       || null;
-      const gclid        = params.get("gclid")        || null;
-      const op           = params.get("op") || "JULIO"; // personalize via ?op=CAROL etc.
-
-      // Data/Hora locais (SP) + ISO
-      const now = new Date();
-      const tz  = "America/Sao_Paulo";
-      const DATA = new Intl.DateTimeFormat("pt-BR", { timeZone: tz }).format(now); // dd/mm/aaaa
-      const HORA = new Intl.DateTimeFormat("pt-BR", { timeZone: tz, hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(now);
-      const ISO  = now.toISOString();
-
-      // ---- ENVIO ASSÍNCRONO PARA SUPABASE (sem bloquear navegação) ----
-      try {
-        const body = {
-          OP: op,
-          DATA,               // se sua coluna for do tipo DATE, envie ISO e ajuste no backend; aqui mantemos string BR
-          HORA,
-          TIMESTAMP_ISO: ISO, // coluna extra sugerida (timestamp completo)
-          UTM_SOURCE: utm_source,
-          UTM_MEDIUM: utm_medium,
-          UTM_CAMPAIGN: utm_campaign,
-          UTM_CONTENT: utm_content,
-          UTM_TERM: utm_term,
-          FBCLID: fbclid,
-          GCLID: gclid,
-          DISPOSITIVO: dispositivo,
-          DESTINO: destinoPrincipal,
-          REFERRER: document.referrer || null,
-          PAGE: location.href
-        };
-
-        // Importante: keepalive permite que o browser conclua a requisição mesmo durante a navegação
-        fetch(`${SUPABASE_URL}/rest/v1/${encodeURIComponent(TABLE)}`, {
-          method: "POST",
-          mode: "cors",
-          keepalive: true,
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY,
-            "Prefer": "return=minimal" // não espera resposta pesada
-          },
-          body: JSON.stringify(body)
-        }).catch(() => { /* silencioso: não bloqueia o fluxo */ });
-      } catch (e) {
-        /* ignora: nunca bloqueia o redirecionamento */
-      }
-
-      // ---- REDIRECIONAMENTO IMEDIATO + FALLBACK ----
-      // dispara já
-      location.href = destinoPrincipal;
-
-      // fallback caso o navegador bloqueie a primeira troca de página
+      // Atraso mínimo só para GTM/UTMify registrar o evento (300ms)
       setTimeout(() => {
-        // se ainda estamos nesta página, tenta o backup
-        if (!document.hidden) location.href = destinoBackup + (queryString ? "?" + queryString : "");
-      }, 1500);
-    })();
+        window.location.replace(destino);
+      }, 300);
+    });
   </script>
 </head>
 <body>
-  <!-- GTM (noscript) -->
+  <!-- Google Tag Manager (noscript) -->
   <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT6B5TBD" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT6B5TBD"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
 
-  <h1>Carregando, aguarde…</h1>
-  <div class="spinner" aria-hidden="true"></div>
+  <h1>Carregando, aguarde...</h1>
+  <div class="spinner"></div>
 </body>
 </html>
