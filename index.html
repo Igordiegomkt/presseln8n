@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecionando...</title>
-
-  <!-- SEO -->
-  <meta name="description" content="Aguarde um momento, estamos processando seu acesso.">
+  <meta charset="UTF-8">
+  <title>Aguarde...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aguarde um momento, estamos te redirecionando.">
   <meta property="og:title" content="Carregando...">
   <meta property="og:description" content="Aguarde um momento, estamos te redirecionando.">
-  <meta property="og:image" content="https://modelo.life/imagem-preview.jpg">
 
   <style>
     body {
-      margin: 0;
       background-color: #000;
       color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
-      font-family: 'Inter', Arial, sans-serif;
+      align-items: center;
       text-align: center;
+      transition: opacity 0.6s ease-in-out;
     }
     h1 {
       font-size: 18px;
-      font-weight: 500;
-      margin-bottom: 15px;
+      animation: fadeIn 1s ease-in-out;
     }
     .spinner {
-      border: 5px solid rgba(255,255,255,0.2);
-      border-top: 5px solid #00ff7f;
+      border: 5px solid #4F4F4F;
+      border-top: 5px solid #00FF00;
       border-radius: 50%;
       width: 50px;
       height: 50px;
       animation: spin 1s linear infinite;
       margin-top: 20px;
+      box-shadow: 0 0 15px #00FF00;
     }
     @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .status {
-      font-size: 14px;
-      color: #aaa;
-      margin-top: 10px;
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
   </style>
 
@@ -60,67 +58,48 @@
       f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-MT6B5TBD');
   </script>
+  <!-- End Google Tag Manager -->
 
-  <!-- UTMify -->
-  <script
-    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-    data-utmify-prevent-xcod-sck
-    data-utmify-prevent-subids
-    async defer></script>
+  <!-- UTMify Script -->
+  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" async defer></script>
 
-  <!-- Pixel UTMify -->
+  <!-- Pixel do Facebook -->
   <script>
-    window.pixelId = "68e19e32a255808f0ad6f844";
-    (function(){
-      var a = document.createElement("script");
-      a.async = true; a.defer = true;
-      a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
-      document.head.appendChild(a);
-    })();
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1312196850345293');
+    fbq('init', '1748812605764523');
+    fbq('trackCustom', 'EntryPressel');
   </script>
+</head>
 
-  <!-- Redirecionamento inteligente -->
+<body>
+  <h1>Aguarde um momento, estamos te redirecionando...</h1>
+  <div class="spinner"></div>
+
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT6B5TBD"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
+      const destino = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab" + (queryString ? "?" + queryString : "");
 
-      // Destino principal (Webhook n8n)
-      const destinoPrimario = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab";
-      const destinoCompleto = destinoPrimario + (queryString ? "?" + queryString : "");
-
-      // Backup automático (failsafe)
-      const destinoBackup = "https://webhook-cf.zapsafe.work/webhook/a";
-
-      const statusEl = document.getElementById("status");
-      statusEl.textContent = "🔍 Verificando conexão segura...";
-
-      // Pequeno atraso (GTM e UTMify tracking)
+      // Fade suave antes de enviar
       setTimeout(() => {
-        fetch(destinoCompleto, { method: "GET", mode: "no-cors" })
-          .then(() => {
-            statusEl.textContent = "✅ Conectado, redirecionando...";
-            setTimeout(() => {
-              window.location.replace(destinoCompleto);
-            }, 200);
-          })
-          .catch(() => {
-            statusEl.textContent = "⚠️ Redirecionando via rota segura...";
-            window.location.replace(destinoBackup);
-          });
+        document.body.style.opacity = "0";
+        setTimeout(() => window.location.replace(destino), 400);
       }, 400);
     });
   </script>
-</head>
-<body>
-  <!-- GTM noscript -->
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT6B5TBD"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
-
-  <h1>Carregando, aguarde...</h1>
-  <div class="spinner"></div>
-  <div id="status" class="status">Iniciando...</div>
 </body>
 </html>
