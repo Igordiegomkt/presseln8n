@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Redirecionando...</title>
+  <title>Aguarde...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Aguarde um momento, estamos te redirecionando.">
   <meta property="og:title" content="Carregando...">
@@ -13,56 +13,61 @@
 
   <style>
     body {
-      background-color: #fff;         /* fundo branco */
-      color: #111;                    /* texto escuro */
-      font-family: 'Poppins', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      background-color: #fff;
+      color: #111;
+      font-family: 'Poppins', sans-serif;
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      transition: opacity 0.6s ease-in-out;
+      margin: 0;
+      transition: opacity 0.3s ease-in-out;
     }
     h1 {
       font-size: 18px;
       font-weight: 600;
-      margin: 0;
+      animation: fadeIn 0.8s ease-in-out;
     }
     .spinner {
       border: 6px solid #e5e5e5;
-      border-top: 6px solid #00FF7F;  /* verde neon */
+      border-top: 6px solid #00FF7F;
       border-radius: 50%;
       width: 60px;
       height: 60px;
-      animation: spin 1s linear infinite;
-      margin-top: 18px;
+      animation: spin 1s linear infinite, pulse 1.5s ease-in-out infinite;
+      margin-top: 20px;
       box-shadow: 0 0 14px #00FF7F;
     }
     @keyframes spin {
-      0% { transform: rotate(0deg) }
-      100% { transform: rotate(360deg) }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 14px #00FF7F; }
+      50% { box-shadow: 0 0 30px #00FF7F; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
       var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
       j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
       f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-MT6B5TBD');
   </script>
-  <!-- End Google Tag Manager -->
 
-  <!-- UTMify Script -->
+  <!-- UTMify -->
   <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" async defer></script>
 
-  <!-- Pixel do Facebook -->
+  <!-- Pixel Facebook -->
   <script>
     !function(f,b,e,v,n,t,s){
       if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -82,24 +87,12 @@
   <div class="spinner"></div>
   <h1>Redirecionando para <span style="color:#00FF7F;">Carol</span>...</h1>
 
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT6B5TBD"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
-
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
-
-      // 🔗 LINK DE REDIRECIONAMENTO (mantido): webhook + UTMs
       const destino = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab" + (queryString ? "?" + queryString : "");
-
-      // Fade suave e redirect rápido (leve para 4G)
-      setTimeout(() => {
-        document.body.style.opacity = "0";
-        setTimeout(() => window.location.replace(destino), 300);
-      }, 300);
+      setTimeout(() => window.location.replace(destino), 200);
     });
   </script>
 </body>
