@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Redirecionando...</title>
+  <title>Aguarde...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Aguarde um momento, estamos te redirecionando.">
   <meta property="og:title" content="Carregando...">
@@ -13,7 +13,7 @@
 
   <style>
     body {
-      background-color: #fff;
+      background-color: #ffffff;
       color: #111;
       font-family: 'Poppins', sans-serif;
       height: 100vh;
@@ -23,30 +23,32 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      transition: opacity 0.4s ease-in-out;
+      transition: opacity 0.4s ease-in-out, background 0.4s ease-in-out;
     }
     h1 {
       font-size: 18px;
       font-weight: 600;
+      color: #0f172a;
+      margin-top: 18px;
+      text-shadow: 0 0 3px rgba(0,0,0,0.1);
       animation: fadeIn 0.8s ease-in-out;
     }
     .spinner {
-      border: 6px solid #e5e5e5;
-      border-top: 6px solid #00FF7F;
+      border: 6px solid #d1d5db;
+      border-top: 6px solid #00ff88;
       border-radius: 50%;
       width: 60px;
       height: 60px;
-      animation: spin 1s linear infinite, pulse 1.5s ease-in-out infinite;
-      margin-top: 20px;
-      box-shadow: 0 0 14px #00FF7F;
+      animation: spin 1s linear infinite, pulse 1.6s ease-in-out infinite;
+      box-shadow: 0 0 18px #00ff88;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
     @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 14px #00FF7F; }
-      50% { box-shadow: 0 0 30px #00FF7F; }
+      0%, 100% { box-shadow: 0 0 18px #00ff88; }
+      50% { box-shadow: 0 0 40px #00ffaa; }
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -85,18 +87,16 @@
 
 <body>
   <div class="spinner"></div>
-  <h1>Redirecionando para <span style="color:#00FF7F;">Carol</span>...</h1>
+  <h1>Redirecionando para <span style="color:#00cc77;">Carol</span>...</h1>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
       const destino = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab" + (queryString ? "?" + queryString : "");
-
-      // Fade-out suave e redirecionamento leve
       setTimeout(() => {
         document.body.style.opacity = "0";
-        setTimeout(() => window.location.replace(destino), 200);
+        setTimeout(() => window.location.replace(destino), 150);
       }, 250);
     });
   </script>
