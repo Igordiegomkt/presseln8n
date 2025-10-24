@@ -2,17 +2,20 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Aguarde...</title>
+  <title>Redirecionando...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Aguarde um momento, estamos te redirecionando.">
   <meta property="og:title" content="Carregando...">
   <meta property="og:description" content="Aguarde um momento, estamos te redirecionando.">
 
+  <!-- Fonte Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
+      background-color: #fff;         /* fundo branco */
+      color: #111;                    /* texto escuro */
+      font-family: 'Poppins', Arial, sans-serif;
       margin: 0;
       padding: 0;
       height: 100vh;
@@ -25,25 +28,22 @@
     }
     h1 {
       font-size: 18px;
-      animation: fadeIn 1s ease-in-out;
+      font-weight: 600;
+      margin: 0;
     }
     .spinner {
-      border: 5px solid #4F4F4F;
-      border-top: 5px solid #00FF00;
+      border: 6px solid #e5e5e5;
+      border-top: 6px solid #00FF7F;  /* verde neon */
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       animation: spin 1s linear infinite;
-      margin-top: 20px;
-      box-shadow: 0 0 15px #00FF00;
+      margin-top: 18px;
+      box-shadow: 0 0 14px #00FF7F;
     }
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% { transform: rotate(0deg) }
+      100% { transform: rotate(360deg) }
     }
   </style>
 
@@ -53,8 +53,7 @@
       new Date().getTime(),event:'gtm.js'});
       var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
       f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-MT6B5TBD');
   </script>
@@ -80,8 +79,8 @@
 </head>
 
 <body>
-  <h1>Aguarde um momento, estamos te redirecionando...</h1>
   <div class="spinner"></div>
+  <h1>Redirecionando para <span style="color:#00FF7F;">Carol</span>...</h1>
 
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT6B5TBD"
@@ -92,13 +91,15 @@
     document.addEventListener("DOMContentLoaded", function() {
       const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
+
+      // 🔗 LINK DE REDIRECIONAMENTO (mantido): webhook + UTMs
       const destino = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab" + (queryString ? "?" + queryString : "");
 
-      // Fade suave antes de enviar
+      // Fade suave e redirect rápido (leve para 4G)
       setTimeout(() => {
         document.body.style.opacity = "0";
-        setTimeout(() => window.location.replace(destino), 400);
-      }, 400);
+        setTimeout(() => window.location.replace(destino), 300);
+      }, 300);
     });
   </script>
 </body>
