@@ -9,7 +9,7 @@
 
   <style>
     body {
-      background: linear-gradient(135deg, #2a0f33, #1e1e2a, #0f0f14);
+      background: linear-gradient(135deg, #1b1b1b, #222831, #393E46);
       color: #fff;
       font-family: 'Poppins', sans-serif;
       height: 100vh;
@@ -22,35 +22,31 @@
     }
 
     .spinner {
-      width: 65px;
-      height: 65px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ff80bf, #ff33cc, #7a1b78);
-      mask: radial-gradient(circle at 50% 50%, transparent 55%, black 60%);
-      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 55%, black 60%);
-      animation: rotate 1.6s linear infinite, fade 3s ease-in-out infinite;
-      filter: blur(0.6px);
+      background: linear-gradient(135deg, #ffb347, #ff6600);
+      mask: radial-gradient(circle at 50% 50%, transparent 60%, black 70%);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 60%, black 70%);
+      animation: spin 1.5s linear infinite, fade 2.8s ease-in-out infinite;
+      filter: brightness(1.1);
       margin-bottom: 25px;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
     }
 
     h1 {
       font-size: 18px;
       font-weight: 500;
-      color: #f7d7ff;
-      text-shadow: 0 0 8px rgba(255, 200, 255, 0.3);
+      color: #ffe5cc;
+      text-shadow: 0 0 8px rgba(255, 165, 100, 0.5);
       animation: fadeIn 1s ease-in-out;
     }
 
-    @keyframes rotate {
-      to { transform: rotate(360deg); }
-    }
-
+    @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes fade {
       0%, 100% { opacity: 0.9; }
       50% { opacity: 0.6; }
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -60,7 +56,7 @@
 
 <body>
   <div class="spinner"></div>
-  <h1>Redirecionando para <span style="color:#ffb3ec;">Carol</span>...</h1>
+  <h1>Redirecionando para <span style="color:#ffb347;">Carol</span>...</h1>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
