@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Aguarde...</title>
+  <title>Redirecionando...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Aguarde um momento, estamos te redirecionando.">
   <meta property="og:title" content="Carregando...">
@@ -17,13 +17,13 @@
       color: #111;
       font-family: 'Poppins', sans-serif;
       height: 100vh;
+      margin: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      margin: 0;
-      transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.4s ease-in-out;
     }
     h1 {
       font-size: 18px;
@@ -92,7 +92,12 @@
       const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
       const destino = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab" + (queryString ? "?" + queryString : "");
-      setTimeout(() => window.location.replace(destino), 200);
+
+      // Fade-out suave e redirecionamento leve
+      setTimeout(() => {
+        document.body.style.opacity = "0";
+        setTimeout(() => window.location.replace(destino), 200);
+      }, 250);
     });
   </script>
 </body>
