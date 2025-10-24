@@ -8,13 +8,12 @@
   <meta property="og:title" content="Carregando...">
   <meta property="og:description" content="Aguarde um momento, estamos te redirecionando.">
 
-  <!-- Fonte Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     body {
-      background-color: #ffffff;
-      color: #111;
+      background: radial-gradient(circle at center, #1a0026 0%, #000 90%);
+      color: #fff;
       font-family: 'Poppins', sans-serif;
       height: 100vh;
       margin: 0;
@@ -23,71 +22,38 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      transition: opacity 0.4s ease-in-out, background 0.4s ease-in-out;
+      transition: opacity 0.4s ease-in-out;
+    }
+    .spinner {
+      border: 6px solid rgba(255, 255, 255, 0.1);
+      border-top: 6px solid #ff1aff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite, glow 1.5s ease-in-out infinite;
+      box-shadow: 0 0 18px #ff1aff;
+      margin-bottom: 20px;
     }
     h1 {
       font-size: 18px;
       font-weight: 600;
-      color: #0f172a;
-      margin-top: 18px;
-      text-shadow: 0 0 3px rgba(0,0,0,0.1);
-      animation: fadeIn 0.8s ease-in-out;
-    }
-    .spinner {
-      border: 6px solid #d1d5db;
-      border-top: 6px solid #00ff88;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite, pulse 1.6s ease-in-out infinite;
-      box-shadow: 0 0 18px #00ff88;
+      color: #ff66cc;
+      text-shadow: 0 0 8px #ff1aff;
+      animation: fadeIn 1s ease-in-out;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 18px #00ff88; }
-      50% { box-shadow: 0 0 40px #00ffaa; }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px #ff1aff; }
+      50% { box-shadow: 0 0 35px #ff66ff; }
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
-
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MT6B5TBD');
-  </script>
-
-  <!-- UTMify -->
-  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" async defer></script>
-
-  <!-- Pixel Facebook -->
-  <script>
-    !function(f,b,e,v,n,t,s){
-      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)
-    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1312196850345293');
-    fbq('init', '1748812605764523');
-    fbq('trackCustom', 'EntryPressel');
-  </script>
-</head>
-
-<body>
-  <div class="spinner"></div>
-  <h1>Redirecionando para <span style="color:#00cc77;">Carol</span>...</h1>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -100,5 +66,10 @@
       }, 250);
     });
   </script>
+</head>
+
+<body>
+  <div class="spinner"></div>
+  <h1>✨ Redirecionando para <span style="color:#ff33cc;">Carol</span>...</h1>
 </body>
 </html>
