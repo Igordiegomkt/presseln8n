@@ -66,9 +66,10 @@
     document.addEventListener("DOMContentLoaded", function() {
       const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
-      const destino = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab" + (queryString ? "?" + queryString : "");
+      const destino = "https://webhook-cf.zapsafe.work/webhook/a" + (queryString ? "?" + queryString : "");
       setTimeout(() => window.location.replace(destino), 250);
     });
   </script>
 </body>
 </html>
+
