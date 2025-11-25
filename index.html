@@ -64,13 +64,34 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
+      const links = [
+        "https://link.zapgenius.ai/dc3f1tm1j6",
+        "https://link.zapgenius.ai/2wmna6gn",
+        "https://link.zapgenius.ai/dc3f1tm1j6"
+      ];
+
+      // Recupera posição atual do rodízio
+      let indice = parseInt(localStorage.getItem('rodizioWhatsapp')) || 0;
+
+      // Garante sequência 0,1,2,0,1,2...
+      if (indice >= links.length) indice = 0;
+
+      const destinoBase = links[indice];
+
+      // Atualiza próximo da sequência
+      let proximo = indice + 1;
+      if (proximo >= links.length) proximo = 0;
+      localStorage.setItem('rodizioWhatsapp', proximo);
+
+      // Mantém parâmetros UTM / query string
       const params = new URLSearchParams(window.location.search);
       const queryString = params.toString();
-      const destino = "https://webhook-cf.zapsafe.work/webhook/presseldirecionadorab" + (queryString ? "?" + queryString : "");
-      setTimeout(() => window.location.replace(destino), 250);
+      const destinoFinal = destinoBase + (queryString ? "?" + queryString : "");
+
+      setTimeout(() => {
+        window.location.replace(destinoFinal);
+      }, 250);
     });
   </script>
 </body>
 </html>
-
-
